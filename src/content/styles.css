@@ -1,0 +1,461 @@
+/* ── VFB Extension Styles (Shadow DOM) ──────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Floating Toolbar ──────────────────────────────────────────────────── */
+.vfb-toolbar {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 2147483647;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.vfb-toolbar-main {
+  background: #1e293b;
+  border-radius: 12px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.vfb-toolbar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  font-size: 14px;
+}
+
+.vfb-toolbar-btn:hover {
+  background: rgba(255,255,255,0.1);
+  color: #f1f5f9;
+}
+
+.vfb-toolbar-btn.active {
+  background: #3b82f6;
+  color: #fff;
+}
+
+.vfb-toolbar-btn.danger:hover {
+  background: rgba(239,68,68,0.15);
+  color: #ef4444;
+}
+
+.vfb-toolbar-divider {
+  width: 1px;
+  height: 24px;
+  background: rgba(255,255,255,0.1);
+  margin: 0 2px;
+}
+
+.vfb-toolbar-label {
+  font-size: 11px;
+  color: #64748b;
+  padding: 0 4px;
+  white-space: nowrap;
+}
+
+.vfb-count-badge {
+  background: #3b82f6;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 9999px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: -6px;
+  margin-top: -18px;
+}
+
+/* ── Element Tooltip ────────────────────────────────────────────────────── */
+.vfb-element-tooltip {
+  display: none;
+  position: absolute;
+  pointer-events: none;
+  background: #1e293b;
+  color: #e2e8f0;
+  font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  z-index: 2147483647;
+  gap: 8px;
+  align-items: center;
+}
+
+.vfb-tip-tag { color: #93c5fd; font-weight: 600; }
+.vfb-tip-size { color: #a3a3a3; }
+.vfb-tip-class { color: #86efac; }
+
+/* ── Annotation Marker (badge on page) ──────────────────────────────────── */
+.vfb-marker {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #3b82f6;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2147483646;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+  transition: transform 0.15s, opacity 0.15s;
+  user-select: none;
+}
+
+.vfb-marker:hover {
+  transform: scale(1.2);
+}
+
+.vfb-marker.resolved {
+  background: #22c55e;
+  opacity: 0.75;
+}
+
+.vfb-marker.invalid {
+  background: #94a3b8;
+  opacity: 0.6;
+}
+
+/* ── Annotation Input Dialog ────────────────────────────────────────────── */
+.vfb-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  z-index: 2147483647;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.vfb-dialog {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  width: 400px;
+  max-width: calc(100vw - 40px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.25);
+  border: 1px solid #e2e8f0;
+}
+
+.vfb-dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.vfb-dialog-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.vfb-dialog-target {
+  font-size: 11px;
+  color: #64748b;
+  margin-bottom: 12px;
+  font-family: 'SF Mono', monospace;
+  background: #f8fafc;
+  padding: 6px 8px;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vfb-dialog textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #0f172a;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.vfb-dialog textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+}
+
+.vfb-dialog-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  justify-content: flex-end;
+}
+
+.vfb-btn {
+  padding: 7px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background 0.15s, opacity 0.15s;
+}
+
+.vfb-btn-primary {
+  background: #3b82f6;
+  color: #fff;
+}
+.vfb-btn-primary:hover { background: #2563eb; }
+.vfb-btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.vfb-btn-secondary {
+  background: #f1f5f9;
+  color: #475569;
+  border-color: #e2e8f0;
+}
+.vfb-btn-secondary:hover { background: #e2e8f0; }
+
+/* ── Annotation Panel ───────────────────────────────────────────────────── */
+.vfb-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 340px;
+  background: #fff;
+  border-left: 1px solid #e2e8f0;
+  z-index: 2147483645;
+  display: flex;
+  flex-direction: column;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  box-shadow: -4px 0 24px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.vfb-panel-header {
+  background: #1e293b;
+  color: #f1f5f9;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.vfb-panel-title {
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vfb-panel-close {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+.vfb-panel-close:hover { color: #f1f5f9; background: rgba(255,255,255,0.1); }
+
+.vfb-panel-filters {
+  padding: 10px 16px;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.vfb-filter-btn {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.vfb-filter-btn.active {
+  background: #1e293b;
+  color: #fff;
+  border-color: #1e293b;
+}
+
+.vfb-panel-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vfb-panel-empty {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 13px;
+  padding: 32px 16px;
+}
+
+/* ── Annotation Item ────────────────────────────────────────────────────── */
+.vfb-ann-item {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  transition: border-color 0.12s;
+}
+
+.vfb-ann-item:hover { border-color: #cbd5e1; }
+.vfb-ann-item.resolved { opacity: 0.65; }
+
+.vfb-ann-item-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.vfb-ann-num {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #3b82f6;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.vfb-ann-num.resolved { background: #22c55e; }
+.vfb-ann-num.invalid { background: #94a3b8; }
+
+.vfb-ann-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.vfb-ann-tag {
+  font-size: 11px;
+  font-family: 'SF Mono', monospace;
+  color: #475569;
+  font-weight: 600;
+}
+
+.vfb-ann-text {
+  font-size: 11px;
+  color: #94a3b8;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vfb-status-chip {
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  flex-shrink: 0;
+}
+.vfb-status-chip.open { background: #fef3c7; color: #92400e; }
+.vfb-status-chip.resolved { background: #dcfce7; color: #166534; }
+
+.vfb-ann-instruction {
+  font-size: 12px;
+  color: #334155;
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.vfb-ann-actions {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.vfb-ann-btn {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+.vfb-ann-btn:hover { background: #f1f5f9; border-color: #cbd5e1; }
+.vfb-ann-btn.danger:hover { background: #fef2f2; border-color: #fecaca; color: #ef4444; }
+.vfb-ann-btn.success:hover { background: #f0fdf4; border-color: #bbf7d0; color: #16a34a; }
+
+/* ── Edit mode inside annotation item ──────────────────────────────────── */
+.vfb-ann-edit textarea {
+  width: 100%;
+  padding: 6px 8px;
+  font-size: 12px;
+  border: 1px solid #3b82f6;
+  border-radius: 4px;
+  resize: vertical;
+  font-family: inherit;
+  margin-bottom: 6px;
+  outline: none;
+}
+
+/* ── Invalid target ─────────────────────────────────────────────────────── */
+.vfb-ann-invalid-note {
+  font-size: 11px;
+  color: #ef4444;
+  background: #fef2f2;
+  padding: 3px 6px;
+  border-radius: 3px;
+  margin-bottom: 6px;
+}
+
+/* ── Highlight temp flash ───────────────────────────────────────────────── */
+.vfb-temp-highlight {
+  outline: 3px solid #3b82f6 !important;
+  outline-offset: 2px;
+  background: rgba(59,130,246,0.08) !important;
+  transition: outline 0.3s, background 0.3s;
+}

@@ -1,0 +1,38 @@
+{
+  "name": "visual-feedback-bridge",
+  "version": "1.0.0",
+  "description": "Chrome extension for adding visual annotations to web pages and exporting them for Code Agents",
+  "private": true,
+  "scripts": {
+    "dev": "npm run build && concurrently --kill-others-on-fail \"vite build --watch --mode watch-main\" \"vite build --watch --config vite.content.config.ts --mode watch-content\"",
+    "build": "npm run typecheck && npm run build:main && npm run build:content && npm run verify:build",
+    "build:main": "vite build",
+    "build:content": "vite build --config vite.content.config.ts",
+    "lint": "eslint src --ext .ts,.tsx",
+    "typecheck": "tsc --noEmit",
+    "verify:build": "node scripts/verify-build.mjs",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "html2canvas": "^1.4.1",
+    "lucide-react": "^0.344.0",
+    "nanoid": "^5.0.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.260",
+    "@types/react": "^18.2.55",
+    "@types/react-dom": "^18.2.19",
+    "@typescript-eslint/eslint-plugin": "^7.0.2",
+    "@typescript-eslint/parser": "^7.0.2",
+    "@vitejs/plugin-react": "^4.2.1",
+    "concurrently": "^9.2.4",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "typescript": "^5.3.3",
+    "vite": "^5.1.4"
+  }
+}
